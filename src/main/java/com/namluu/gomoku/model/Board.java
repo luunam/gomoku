@@ -120,6 +120,7 @@ public class Board {
 		for (int colIdx = 0; colIdx < BOARD_SIZE; colIdx++) {
 			for (int rowIdx = 0; rowIdx < BOARD_SIZE; rowIdx++) {
 				evaluator.examine(this, rowIdx, colIdx);
+				
 				if (evaluator.finish()) {
 					return;
 				}

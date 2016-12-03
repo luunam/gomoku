@@ -27,13 +27,16 @@ public class HeuristicEvaluator implements CellEvaluator {
 	@Override
 	public void examine(Board board, int x, int y) {
 		if (board.getSymbol(x, y) == null) {
+			
 			if (oneEndOpening && currentCount == 3) {
+				
 				currentCount = 0;
 				if (symbol == currentSymbol) {
 					ourOpenThree++;
 				} else if (currentSymbol != null) {
 					opponentOpenThree++;
 				}
+				
 			} else if (currentCount >= 4) {
 				if (symbol == currentSymbol) {
 					ourFour++;
@@ -41,10 +44,13 @@ public class HeuristicEvaluator implements CellEvaluator {
 					opponentFour++;
 				}
 			}
+			
 			currentCount = 0;
 			oneEndOpening = true;
 			currentSymbol = null;
+			
 		} else {
+			
 			if (board.getSymbol(x, y) != currentSymbol) {
 				if (oneEndOpening && currentCount >= 4) {
 					if (currentSymbol == symbol) {
@@ -53,8 +59,10 @@ public class HeuristicEvaluator implements CellEvaluator {
 						opponentFour++;
 					}
 				}
+				
 				currentSymbol = board.getSymbol(x, y);
 				currentCount = 1;
+				
 			} else {
 				currentCount++;
 			}

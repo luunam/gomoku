@@ -137,6 +137,7 @@ public class Game {
 			int x = move.getX();
 			int y = move.getY();
 			
+			System.out.println("handle move: " + x + " " + y);
 			if (!board.isOccupied(x, y)) {
 				lastMove = move;
 				board.set(x, y, turn);
@@ -157,6 +158,7 @@ public class Game {
 				});
 				
 			} else {
+				System.out.println("move is invalid");
 				maps.get(getCurrentTurn()).requestMove(lastMove);
 			}
 		}

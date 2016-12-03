@@ -6,6 +6,7 @@ import com.namluu.gomoku.agent.Agent;
 import com.namluu.gomoku.game.Game;
 import com.namluu.gomoku.game.IGameState;
 import com.namluu.gomoku.heuristic.HeuristicEvaluator;
+import com.namluu.gomoku.heuristic.ThreatEvaluator;
 import com.namluu.gomoku.model.Board;
 import com.namluu.gomoku.model.Move;
 import com.namluu.gomoku.model.PlayerSymbol;
@@ -37,15 +38,21 @@ public class AIAgent implements Agent {
 	}
 	
 	public void requestMove(Move lastMove) {
-		System.out.println("get here");
 		if (lastMove != null) {
 			
 			boundary = boundary.getNewBoundary(lastMove);
 			GameState currentState = new GameState(game.getCurrentState(), symbol, boundary);
 			
-			MinimaxPair evaluate = this.search(0, currentState, 0, -1000000, 1000000);
-			System.out.println("point: " + evaluate.successorValue);
-			game.handleMove(evaluate.action, symbol);
+			Move move = searchForThreat();
+			if (move == null) {
+				MinimaxPair evaluate = this.search(0, currentState, 0, -1000000, 1000000);
+				System.out.println("point: " + evaluate.successorValue);
+				
+				game.handleMove(evaluate.action, symbol);
+			} else {
+				System.out.println(move.getX() + " " + move.getY());
+				game.handleMove(move, symbol);
+			}
 			
 		} else {
 			// We move first so choose a random move
@@ -55,6 +62,18 @@ public class AIAgent implements Agent {
 			
 			game.handleMove(new Move(ranX, ranY, symbol), symbol);
 		}
+	}
+	
+	private Move searchForThreat() {
+		ThreatEvaluator evaluator = new ThreatEvaluator(symbol);
+		game.getCurrentState().traverseBoard(evaluator);
+		Move counterMove = evaluator.getCounterMove();
+		
+		if (counterMove != null) {
+			System.out.println("found counter move!");
+			System.out.println(counterMove.getX() + " " + counterMove.getY());
+		}
+		return evaluator.getCounterMove();
 	}
 	
 	public Move request(Move lastMove) {
