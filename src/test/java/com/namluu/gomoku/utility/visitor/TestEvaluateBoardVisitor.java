@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.namluu.gomoku.heuristic.CheckGoalStateEvaluator;
-import com.namluu.gomoku.heuristic.HeuristicEvaluator;
-import com.namluu.gomoku.model.Board;
-import com.namluu.gomoku.model.PlayerSymbol;
-import com.namluu.gomoku.utility.EvaluateBoardResult;
+import com.gomoku.heuristic.CheckGoalStateEvaluator;
+import com.gomoku.heuristic.HeuristicEvaluator;
+import com.gomoku.model.Board;
+import com.gomoku.model.PlayerSymbol;
+import com.gomoku.utility.EvaluateBoardResult;
 
 
 public class TestEvaluateBoardVisitor {
