@@ -69,11 +69,7 @@ public class AIAgent implements Agent {
 		game.getCurrentState().traverseBoard(evaluator);
 		Move counterMove = evaluator.getCounterMove();
 		
-		if (counterMove != null) {
-			System.out.println("found counter move!");
-			System.out.println(counterMove.getX() + " " + counterMove.getY());
-		}
-		return evaluator.getCounterMove();
+		return counterMove;
 	}
 	
 	public Move request(Move lastMove) {
